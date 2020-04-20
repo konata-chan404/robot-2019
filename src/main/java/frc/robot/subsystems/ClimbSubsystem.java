@@ -37,4 +37,9 @@ public class ClimbSubsystem extends SubsystemBase {
   public boolean getSolenoid() {
     return climbSolenoid.get() == Value.kForward;
   }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }

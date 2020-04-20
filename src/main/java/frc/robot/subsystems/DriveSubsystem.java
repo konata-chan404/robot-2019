@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -19,7 +18,7 @@ public class DriveSubsystem extends SubsystemBase {
    * 
    */
 
-  private static DriveSubsystem DriveSubsystem;
+  private static DriveSubsystem driveSubsystem;
 
   private CANSparkMax SM_LeftUp;
   private CANSparkMax SM_LeftDown;
@@ -42,10 +41,10 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public static DriveSubsystem getInstance() {
-    if (DriveSubsystem == null) {
-      DriveSubsystem = new DriveSubsystem();
+    if (driveSubsystem == null) {
+      driveSubsystem = new DriveSubsystem();
     }
-    return DriveSubsystem;
+    return driveSubsystem;
   }
 
   public void setLeftMotors(double power) {
@@ -59,8 +58,5 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
-    SmartDashboard.putNumber("left power:", SM_LeftUp.get());
-    SmartDashboard.putNumber("right power:", SM_RightUp.get());
   }
 }

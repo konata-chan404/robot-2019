@@ -33,9 +33,20 @@ public class IntakeRotateCommand extends CommandBase {
   public void initialize() {
     intakeSubsystem.setIntakeRotate(1);
   }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+    }
   
-  @Override
-  public void end(boolean interrupted) {
-    intakeSubsystem.setIntakeRotate(0);;
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+  
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+      return false;
+    }
   }
-}

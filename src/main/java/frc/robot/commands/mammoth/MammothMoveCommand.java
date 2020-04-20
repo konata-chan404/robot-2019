@@ -47,6 +47,7 @@ public class MammothMoveCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     mammothSubsystem.setMovementMotor(0);
+    mammothSubsystem.setIntakeMotor(0);
   }
 
   // Returns true when the command should end.

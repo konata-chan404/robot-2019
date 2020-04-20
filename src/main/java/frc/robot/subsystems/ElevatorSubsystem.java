@@ -23,8 +23,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
 
   private ElevatorSubsystem() {
-
-
+    elevatorTalon = new WPI_TalonSRX(7);
   }
 
   public static ElevatorSubsystem getInstance() {

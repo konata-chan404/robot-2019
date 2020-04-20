@@ -23,7 +23,8 @@ public class MammothSubsystem extends SubsystemBase {
   private WPI_VictorSPX mammothVictor;
 
   private MammothSubsystem() {
-
+    mammothTalon = new WPI_TalonSRX(8); 
+    mammothVictor = new WPI_VictorSPX(9);
   }
 
   public static MammothSubsystem getInstance() {
