@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeMoveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   IntakeSubsystem intakeSubsystem;
+  double power;
 
   /**
    * Creates a new ExampleCommand.
@@ -23,15 +24,22 @@ public class IntakeMoveCommand extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
 
-  public IntakeMoveCommand() {
+  public IntakeMoveCommand(double Power) {
     intakeSubsystem = IntakeSubsystem.getInstance();
+    power = Power;
+
     addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeSubsystem.setIntakeMotors(1);
+    intakeSubsystem.setIntakeMotors(power);
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
   }
   
   @Override

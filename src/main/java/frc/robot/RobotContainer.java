@@ -36,6 +36,8 @@ public class RobotContainer {
   public static JoystickButton cButton = new JoystickButton(Controller, 3);
   public static JoystickButton dButton = new JoystickButton(Controller, 4);
   public static JoystickButton eButton = new JoystickButton(Controller, 5);
+  public static JoystickButton fButton = new JoystickButton(Controller, 6);
+  public static JoystickButton gButton = new JoystickButton(Controller, 7);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -56,9 +58,12 @@ public class RobotContainer {
     aButton.whenPressed(new ClimbCommand());
     bButton.whileHeld(new MammothPush());
     
-    cButton.whileHeld(new IntakeMoveCommand());
-    dButton.whileHeld(new IntakeRotateCommand());
     eButton.whileHeld(new IntakeSolenoidCommand());
+
+    cButton.whileHeld(new IntakeMoveCommand(1));
+    dButton.whileHeld(new IntakeRotateCommand(1));
+    fButton.whileHeld(new IntakeMoveCommand(-1));
+    gButton.whileHeld(new IntakeRotateCommand(-1));
   }
 
 

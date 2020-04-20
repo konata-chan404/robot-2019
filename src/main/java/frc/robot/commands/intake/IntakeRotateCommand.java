@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeRotateCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   IntakeSubsystem intakeSubsystem;
+  double power;
 
   /**
    * Creates a new ExampleCommand.
@@ -23,15 +24,17 @@ public class IntakeRotateCommand extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
 
-  public IntakeRotateCommand() {
+  public IntakeRotateCommand(double Power) {
     intakeSubsystem = IntakeSubsystem.getInstance();
+    power = Power;
+
     addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeSubsystem.setIntakeRotate(1);
+    intakeSubsystem.setIntakeRotate(power);
   }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -42,6 +45,7 @@ public class IntakeRotateCommand extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+      intakeSubsystem.setIntakeRotate(0);
     }
   
     // Returns true when the command should end.
