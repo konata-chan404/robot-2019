@@ -16,4 +16,34 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static int DoubleSolenoidFoward = 1;
+    public static int DoubleSolenoidReverse = 2;
+
+    public static int DriveLeftUpPort = 3;
+    public static int DriveLeftDownPort = 4;
+    public static int DriveRightUpPort = 5;
+    public static int DriveRightDownPort = 6;
+
+    public static int ElevatorTalonPort = 7;
+
+    public static int IntakeLeftTalonPort = 8;
+    public static int IntakeRightTalonPort = 9;
+    public static int IntakeVictorPort = 10;
+    public static int IntakeSolenoidPort = 11;
+
+    public static int MammothTalonPort = 12;
+    public static int MammothVictorPort = 13;
+
+    public static int LeftJoystickPort = 1;
+    public static int RightJoystickPort = 2;
+    public static int ControllerPort = 3;
+
+    public static int AButton = 1;
+    public static int BButton = 2;
+    public static int Xbutton = 3;
+    public static int YButton = 4;
+    public static int L1Button = 5;
+    public static int R1Button = 6;
+    public static int LeftMiddleButton = 7;
+    public static int RightMiddleButton = 8;
 }

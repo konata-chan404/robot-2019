@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -27,10 +28,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   private DriveSubsystem() {
 
-  SM_LeftUp = new CANSparkMax(1, MotorType.kBrushless);
-  SM_LeftDown = new CANSparkMax(2, MotorType.kBrushless);
-  SM_RightUp = new CANSparkMax(3, MotorType.kBrushless);
-  SM_RightDown = new CANSparkMax(4, MotorType.kBrushless);
+  SM_LeftUp = new CANSparkMax(Constants.DriveLeftUpPort, MotorType.kBrushless);
+  SM_LeftDown = new CANSparkMax(Constants.DriveLeftDownPort, MotorType.kBrushless);
+  SM_RightUp = new CANSparkMax(Constants.DriveRightUpPort, MotorType.kBrushless);
+  SM_RightDown = new CANSparkMax(Constants.DriveRightDownPort, MotorType.kBrushless);
   
   SM_LeftUp.setInverted(true);
   SM_LeftDown.setInverted(true);

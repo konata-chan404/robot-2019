@@ -27,17 +27,18 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public static Joystick Left_DJoystick = new Joystick(1);
-  public static Joystick Right_DJoystick = new Joystick(2);
-  public static XboxController Controller = new XboxController(3);
+  public static Joystick Left_DJoystick = new Joystick(Constants.LeftJoystickPort);
+  public static Joystick Right_DJoystick = new Joystick(Constants.RightJoystickPort);
+  public static XboxController Controller = new XboxController(Constants.ControllerPort);
   
-  public static JoystickButton aButton = new JoystickButton(Controller, 1);
-  public static JoystickButton bButton = new JoystickButton(Controller, 2);
-  public static JoystickButton cButton = new JoystickButton(Controller, 3);
-  public static JoystickButton dButton = new JoystickButton(Controller, 4);
-  public static JoystickButton eButton = new JoystickButton(Controller, 5);
-  public static JoystickButton fButton = new JoystickButton(Controller, 6);
-  public static JoystickButton gButton = new JoystickButton(Controller, 7);
+  public static JoystickButton aButton = new JoystickButton(Controller, Constants.AButton);
+  public static JoystickButton bButton = new JoystickButton(Controller, Constants.BButton);
+  public static JoystickButton xButton = new JoystickButton(Controller, Constants.Xbutton);
+  public static JoystickButton yButton = new JoystickButton(Controller, Constants.YButton);
+  public static JoystickButton l1Button = new JoystickButton(Controller, Constants.L1Button);
+  public static JoystickButton r1Button = new JoystickButton(Controller, Constants.R1Button);
+
+  public static JoystickButton lmButton = new JoystickButton(Controller, Constants.LeftMiddleButton);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -58,12 +59,13 @@ public class RobotContainer {
     aButton.whenPressed(new ClimbCommand());
     bButton.whileHeld(new MammothPush());
     
-    eButton.whileHeld(new IntakeSolenoidCommand());
+    xButton.whileHeld(new IntakeSolenoidCommand());
 
-    cButton.whileHeld(new IntakeMoveCommand(1));
-    dButton.whileHeld(new IntakeRotateCommand(1));
-    fButton.whileHeld(new IntakeMoveCommand(-1));
-    gButton.whileHeld(new IntakeRotateCommand(-1));
+    l1Button.whileHeld(new IntakeMoveCommand(1));
+    r1Button.whileHeld(new IntakeMoveCommand(-1));
+
+    lmButton.whileHeld(new IntakeRotateCommand(1));
+    xButton.whileHeld(new IntakeRotateCommand(-1));
   }
 
 

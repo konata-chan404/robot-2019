@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /**
@@ -22,19 +23,19 @@ public class IntakeSubsystem extends SubsystemBase {
 
   Solenoid intakeSolenoid;
   
-  TalonSRX leftTalon;
-  TalonSRX rightTalon;
+  TalonSRX aTalon;
+  TalonSRX bTalon;
 
   VictorSPX intakeVictor;
 
 
   private  IntakeSubsystem() {
-    intakeSolenoid = new Solenoid(1);
-    intakeVictor = new VictorSPX(2);
+    intakeSolenoid = new Solenoid(Constants.IntakeSolenoidPort);
+    intakeVictor = new VictorSPX(Constants.IntakeVictorPort);
 
-    leftTalon = new TalonSRX(1);
-    rightTalon = new TalonSRX(2);
-    rightTalon.follow(leftTalon);
+    aTalon = new TalonSRX(Constants.IntakeLeftTalonPort);
+    bTalon = new TalonSRX(Constants.IntakeRightTalonPort);
+    bTalon.follow(aTalon);
   }
 
   public static IntakeSubsystem getInstance() {
@@ -45,7 +46,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakeMotors(double power) {
-    rightTalon.set(ControlMode.PercentOutput, power);
+    bTalon.set(ControlMode.PercentOutput, power);
   }
 
   public void setIntakeRotate(double power) {

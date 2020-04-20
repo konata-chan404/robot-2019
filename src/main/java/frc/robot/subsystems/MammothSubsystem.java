@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class MammothSubsystem extends SubsystemBase {
   /**
@@ -23,8 +24,8 @@ public class MammothSubsystem extends SubsystemBase {
   private WPI_VictorSPX mammothVictor;
 
   private MammothSubsystem() {
-    mammothTalon = new WPI_TalonSRX(8); 
-    mammothVictor = new WPI_VictorSPX(9);
+    mammothTalon = new WPI_TalonSRX(Constants.MammothTalonPort); 
+    mammothVictor = new WPI_VictorSPX(Constants.MammothVictorPort);
   }
 
   public static MammothSubsystem getInstance() {
