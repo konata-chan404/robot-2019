@@ -8,11 +8,18 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -22,20 +29,31 @@ public class IntakeSubsystem extends SubsystemBase {
   private static IntakeSubsystem intakeSubsystem;
 
   Solenoid intakeSolenoid;
-  
+
   TalonSRX aTalon;
   TalonSRX bTalon;
 
   VictorSPX intakeVictor;
+  Encoder intakeEncoder;
+  DigitalInput intakeLimit;
+
+  PIDController intakePID;
 
 
   private  IntakeSubsystem() {
     intakeSolenoid = new Solenoid(Constants.IntakeSolenoidPort);
     intakeVictor = new VictorSPX(Constants.IntakeVictorPort);
-
+    intakeEncoder =  new Encoder(Constants.IntakeFowardEncoderPort, Constants.IntakeReverseEncoderPort, false, EncodingType.k4X);
+    intakeLimit = new DigitalInput(Constants.intakeLimitPort);
     aTalon = new TalonSRX(Constants.IntakeLeftTalonPort);
     bTalon = new TalonSRX(Constants.IntakeRightTalonPort);
+
+    intakePID = new PIDController(Constants.IntakeKp, Constants.IntakeKi, Constants.Kd);
+
+    aTalon.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen);
+    intakeEncoder.setDistancePerPulse(1);
     bTalon.follow(aTalon);
+
   }
 
   public static IntakeSubsystem getInstance() {
@@ -51,6 +69,18 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void setIntakeRotate(double power) {
     intakeVictor.set(ControlMode.PercentOutput, power);
+  }
+
+  public void resetEncoder() {
+    intakeEncoder.reset();;
+  }
+
+  public double getEncoderPID(double setpoint) {
+    return intakePID.calculate(MathUtil.clamp(intakeEncoder.get(), -1, 1));
+  }
+
+  public boolean getLimitSwitch() {
+    return intakeLimit.get();
   }
 
   public void setSolenoid(boolean state) {

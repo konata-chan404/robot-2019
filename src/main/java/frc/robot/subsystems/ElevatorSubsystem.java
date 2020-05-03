@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,11 +23,16 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
 
   private static ElevatorSubsystem elevatorSubsystem;
+  
   private WPI_TalonSRX elevatorTalon;
+  private Encoder elevatorEncoder;
+  private DigitalInput elevatorLimit;
 
 
   private ElevatorSubsystem() {
     elevatorTalon = new WPI_TalonSRX(Constants.ElevatorTalonPort);
+    elevatorEncoder = new Encoder(Constants.ElevatorFowardEncoderPort, Constants.ElevatorReverseEncoderPort, false, EncodingType.k4X);
+    elevatorLimit = new DigitalInput(Constants.elevatorLimitPort);
   }
 
   public static ElevatorSubsystem getInstance() {
