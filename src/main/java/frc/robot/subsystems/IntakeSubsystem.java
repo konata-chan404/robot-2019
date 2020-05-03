@@ -44,11 +44,11 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeSolenoid = new Solenoid(Constants.IntakeSolenoidPort);
     intakeVictor = new VictorSPX(Constants.IntakeVictorPort);
     intakeEncoder =  new Encoder(Constants.IntakeFowardEncoderPort, Constants.IntakeReverseEncoderPort, false, EncodingType.k4X);
-    intakeLimit = new DigitalInput(Constants.intakeLimitPort);
+    intakeLimit = new DigitalInput(Constants.IntakeLimitPort);
     aTalon = new TalonSRX(Constants.IntakeLeftTalonPort);
     bTalon = new TalonSRX(Constants.IntakeRightTalonPort);
 
-    intakePID = new PIDController(Constants.IntakeKp, Constants.IntakeKi, Constants.Kd);
+    intakePID = new PIDController(Constants.IntakeKp, Constants.IntakeKi, Constants.IntakeKd);
 
     aTalon.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen);
     intakeEncoder.setDistancePerPulse(1);

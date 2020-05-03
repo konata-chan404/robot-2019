@@ -10,7 +10,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -27,12 +29,14 @@ public class ElevatorSubsystem extends SubsystemBase {
   private WPI_TalonSRX elevatorTalon;
   private Encoder elevatorEncoder;
   private DigitalInput elevatorLimit;
+  private PIDController elevatorPID;
 
 
   private ElevatorSubsystem() {
     elevatorTalon = new WPI_TalonSRX(Constants.ElevatorTalonPort);
     elevatorEncoder = new Encoder(Constants.ElevatorFowardEncoderPort, Constants.ElevatorReverseEncoderPort, false, EncodingType.k4X);
-    elevatorLimit = new DigitalInput(Constants.elevatorLimitPort);
+    elevatorLimit = new DigitalInput(Constants.ElevatorLimitPort);
+    elevatorPID = new PIDController(Constants.ElevatorKp, Constants.ElevatorKi, Constants.ElevatorKd);
   }
 
   public static ElevatorSubsystem getInstance() {
@@ -44,6 +48,18 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void setMotor(double power) {
     elevatorTalon.set(ControlMode.PercentOutput, power);
+  }
+
+  public void resetEncoder() {
+    elevatorEncoder.reset();
+  }
+
+  public double getEncoderPID(double setpoint) {
+    return elevatorPID.calculate(MathUtil.clamp(elevatorEncoder.get(), -1, 1));
+  }
+
+  public boolean getLimitSwitch() {
+    return elevatorLimit.get();
   }
 
   @Override

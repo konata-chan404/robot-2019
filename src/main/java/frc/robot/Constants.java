@@ -25,14 +25,35 @@ public final class Constants {
     public static int DriveRightDownPort = 6;
 
     public static int ElevatorTalonPort = 7;
+    public static int ElevatorFowardEncoderPort = 14;
+    public static int ElevatorReverseEncoderPort = 15;
+    public static int ElevatorLimitPort = 16;
 
     public static int IntakeLeftTalonPort = 8;
     public static int IntakeRightTalonPort = 9;
     public static int IntakeVictorPort = 10;
     public static int IntakeSolenoidPort = 11;
+    public static int IntakeFowardEncoderPort = 16;
+    public static int IntakeReverseEncoderPort = 17;
+    public static int IntakeLimitPort = 18;
 
     public static int MammothTalonPort = 12;
     public static int MammothVictorPort = 13;
+    public static int MammothFowardEncoderPort = 19;
+    public static int MammothReverseEncoderPort = 20;
+    public static int MammothLimitPort = 21;
+
+    public static double ElevatorKp = 1;
+    public static double ElevatorKi = 1;
+    public static double ElevatorKd = 1;
+
+    public static double IntakeKp = 1;
+    public static double IntakeKi = 1;
+    public static double IntakeKd = 1;
+    
+    public static double MammothKp = 1;
+    public static double MammothKi = 1;
+    public static double MammothKd = 1;
 
     public static int LeftJoystickPort = 1;
     public static int RightJoystickPort = 2;
