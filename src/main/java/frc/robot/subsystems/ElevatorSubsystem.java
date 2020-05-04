@@ -11,11 +11,14 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -37,6 +40,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorEncoder = new Encoder(Constants.ElevatorFowardEncoderPort, Constants.ElevatorReverseEncoderPort, false, EncodingType.k4X);
     elevatorLimit = new DigitalInput(Constants.ElevatorLimitPort);
     elevatorPID = new PIDController(Constants.ElevatorKp, Constants.ElevatorKi, Constants.ElevatorKd);
+
+    elevatorPID.setTolerance(1);
+    elevatorTalon.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen);
+    elevatorEncoder.setDistancePerPulse(1);
   }
 
   public static ElevatorSubsystem getInstance() {
@@ -54,8 +61,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorEncoder.reset();
   }
 
-  public double getEncoderPID(double setpoint) {
-    return elevatorPID.calculate(MathUtil.clamp(elevatorEncoder.get(), -1, 1));
+  public int getEncoder() {
+    return elevatorEncoder.get();
+  }
+
+  public double getEncoderPID(int setpoint) {
+    return elevatorPID.calculate(MathUtil.clamp(elevatorEncoder.get(), -1, 1), setpoint);
   }
 
   public boolean getLimitSwitch() {
@@ -65,5 +76,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Mammoth encoder value:", elevatorEncoder.get());
+    SmartDashboard.putBoolean("Mammoth limit switch value:", elevatorLimit.get());
   }
 }

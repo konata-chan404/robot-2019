@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
@@ -49,6 +50,7 @@ public class IntakeSubsystem extends SubsystemBase {
     bTalon = new TalonSRX(Constants.IntakeRightTalonPort);
 
     intakePID = new PIDController(Constants.IntakeKp, Constants.IntakeKi, Constants.IntakeKd);
+    intakePID.setTolerance(1);
 
     aTalon.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen);
     intakeEncoder.setDistancePerPulse(1);
@@ -75,6 +77,10 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeEncoder.reset();;
   }
 
+  public int getEncoder() {
+    return intakeEncoder.get();
+  }
+
   public double getEncoderPID(double setpoint) {
     return intakePID.calculate(MathUtil.clamp(intakeEncoder.get(), -1, 1));
   }
@@ -94,5 +100,8 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Intake encoder value:", intakeEncoder.get());
+    SmartDashboard.putBoolean("Intake solenoid value:", intakeSolenoid.get());
+    SmartDashboard.putBoolean("Intake limit switch value:", intakeLimit.get());
   }
 }

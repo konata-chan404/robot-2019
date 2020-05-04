@@ -14,7 +14,7 @@ import frc.robot.Constants;
 
 public class ClimbSubsystem extends SubsystemBase {
   
-  public static ClimbSubsystem climbSubsystem;
+  private  static ClimbSubsystem climbSubsystem;
   
   private DoubleSolenoid climbSolenoid;
 

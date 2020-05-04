@@ -16,6 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
@@ -40,6 +41,7 @@ public class MammothSubsystem extends SubsystemBase {
     mammothEncoder = new Encoder(Constants.MammothFowardEncoderPort, Constants.MammothReverseEncoderPort, false, EncodingType.k4X);
 
     mammothPID = new PIDController(Constants.MammothKp , Constants.MammothKi, Constants.MammothKd);
+    mammothPID.setTolerance(1);
 
     mammothTalon.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen);
     mammothEncoder.setDistancePerPulse(1);
@@ -64,6 +66,10 @@ public class MammothSubsystem extends SubsystemBase {
       return mammothPID.calculate(MathUtil.clamp( mammothEncoder.get(), -1, 1), setpoint);
   }
 
+  public int getEncoder() { 
+    return mammothEncoder.get();
+  }
+
   public boolean getLimitSwitch() {
     return mammothLimit.get();
   }
@@ -75,5 +81,7 @@ public class MammothSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Mammoth encoder value:", mammothEncoder.get());
+    SmartDashboard.putBoolean("Mammoth limit switch value:", mammothLimit.get());
   }
 }
