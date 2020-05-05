@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MammothMoveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private MammothSubsystem mammothSubsystem;
+  private MammothPID mammothPID;
   /**
    * Creates a new ExampleCommand.
    *
@@ -46,7 +47,7 @@ public class MammothMoveCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mammothSubsystem.setMovementMotor(0);
+    mammothPID.schedule();
     mammothSubsystem.setIntakeMotor(0);
   }
 

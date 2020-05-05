@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ElevatorCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private ElevatorSubsystem elevatorSubsystem;
+  private ElevatorPID elevatorPID;
 
   /**
    * Creates a new ExampleCommand.
@@ -46,7 +47,7 @@ public class ElevatorCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elevatorSubsystem.setMotor(0);
+    elevatorPID.schedule();
   }
 
   // Returns true when the command should end.
