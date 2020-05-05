@@ -61,12 +61,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorEncoder.reset();
   }
 
-  public int getEncoder() {
-    return elevatorEncoder.get();
+  public double getEncoder() {
+    return elevatorEncoder.getDistance();
   }
 
-  public double getEncoderPID(int setpoint) {
-    return elevatorPID.calculate(MathUtil.clamp(elevatorEncoder.get(), -1, 1), setpoint);
+  public double getEncoderPID(double setpoint) {
+    return elevatorPID.calculate(MathUtil.clamp(getEncoder() , -1, 1), setpoint);
   }
 
   public boolean getLimitSwitch() {
@@ -76,7 +76,11 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Mammoth encoder value:", elevatorEncoder.get());
-    SmartDashboard.putBoolean("Mammoth limit switch value:", elevatorLimit.get());
+    if (getLimitSwitch()) {
+      resetEncoder();
+    }
+    
+    SmartDashboard.putNumber("Mammoth encoder value:", getEncoder());
+    SmartDashboard.putBoolean("Mammoth limit switch value:", getLimitSwitch());
   }
 }

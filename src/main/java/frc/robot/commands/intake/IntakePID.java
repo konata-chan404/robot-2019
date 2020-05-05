@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakePID extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private IntakeSubsystem intakeSubsystem;
-    private int setpoint;
+    private double setpoint;
   /**
    * Creates a new ExampleCommand.
    *

@@ -29,16 +29,16 @@ public class IntakeSubsystem extends SubsystemBase {
    */
   private static IntakeSubsystem intakeSubsystem;
 
-  Solenoid intakeSolenoid;
+  private Solenoid intakeSolenoid;
 
-  TalonSRX aTalon;
-  TalonSRX bTalon;
+  private TalonSRX aTalon;
+  private TalonSRX bTalon;
 
-  VictorSPX intakeVictor;
-  Encoder intakeEncoder;
-  DigitalInput intakeLimit;
+  private VictorSPX intakeVictor;
+  private Encoder intakeEncoder;
+  private DigitalInput intakeLimit;
 
-  PIDController intakePID;
+  private PIDController intakePID;
 
 
   private  IntakeSubsystem() {
@@ -77,12 +77,12 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeEncoder.reset();;
   }
 
-  public int getEncoder() {
-    return intakeEncoder.get();
+  public double getEncoder() {
+    return intakeEncoder.getDistance();
   }
 
   public double getEncoderPID(double setpoint) {
-    return intakePID.calculate(MathUtil.clamp(intakeEncoder.get(), -1, 1));
+    return intakePID.calculate(MathUtil.clamp(getEncoder(), -1, 1));
   }
 
   public boolean getLimitSwitch() {
@@ -100,8 +100,12 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Intake encoder value:", intakeEncoder.get());
-    SmartDashboard.putBoolean("Intake solenoid value:", intakeSolenoid.get());
-    SmartDashboard.putBoolean("Intake limit switch value:", intakeLimit.get());
+    if (getLimitSwitch()) {
+      resetEncoder();
+    }
+
+    SmartDashboard.putNumber("Intake encoder value:", getEncoder());
+    SmartDashboard.putBoolean("Intake solenoid value:", getSolenoid());
+    SmartDashboard.putBoolean("Intake limit switch value:", getLimitSwitch());
   }
 }

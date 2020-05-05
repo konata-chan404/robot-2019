@@ -63,11 +63,11 @@ public class MammothSubsystem extends SubsystemBase {
   }
 
   public double getEncoderPID(double setpoint) {
-      return mammothPID.calculate(MathUtil.clamp( mammothEncoder.get(), -1, 1), setpoint);
+      return mammothPID.calculate(MathUtil.clamp( getEncoder(), -1, 1), setpoint);
   }
 
-  public int getEncoder() { 
-    return mammothEncoder.get();
+  public double getEncoder() { 
+    return mammothEncoder.getDistance();
   }
 
   public boolean getLimitSwitch() {
@@ -81,7 +81,11 @@ public class MammothSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Mammoth encoder value:", mammothEncoder.get());
-    SmartDashboard.putBoolean("Mammoth limit switch value:", mammothLimit.get());
+    if (getLimitSwitch()) {
+      resetEncoder();
+    }
+    
+    SmartDashboard.putNumber("Mammoth encoder value:", getEncoder());
+    SmartDashboard.putBoolean("Mammoth limit switch value:", getLimitSwitch());
   }
 }

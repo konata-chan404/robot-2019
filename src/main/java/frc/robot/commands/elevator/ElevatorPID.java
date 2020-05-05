@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ElevatorPID extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private ElevatorSubsystem elevatorSubsystem;
-    private int setpoint;
+    private double setpoint;
   /**
    * Creates a new ExampleCommand.
    *

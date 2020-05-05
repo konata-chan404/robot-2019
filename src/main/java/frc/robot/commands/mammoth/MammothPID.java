@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MammothPID extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private MammothSubsystem mammothSubsystem;
-    private int setpoint;
+    private double setpoint;
   /**
    * Creates a new ExampleCommand.
    *
