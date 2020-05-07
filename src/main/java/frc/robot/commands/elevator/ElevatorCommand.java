@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ElevatorCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private ElevatorSubsystem elevatorSubsystem;
-  private ElevatorPID elevatorPID;
-
+  private boolean isIdle;
+  private double setpoint;
   /**
    * Creates a new ExampleCommand.
    *
@@ -36,18 +36,29 @@ public class ElevatorCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevatorSubsystem.setMotor(RobotContainer.Controller.getY(Hand.kLeft));
+    if (RobotContainer.Controller.getY(Hand.kLeft) > 0.1 || RobotContainer.Controller.getY(Hand.kLeft) < -0.1) {
+      elevatorSubsystem.setMotor(RobotContainer.Controller.getY(Hand.kLeft));
+      isIdle = false;
+    }
+    else if (isIdle) {
+      elevatorSubsystem.setMotor(elevatorSubsystem.getEncoderPID(setpoint));
+    }
+    else {
+      setpoint = elevatorSubsystem.getEncoder();
+      isIdle = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elevatorPID.schedule();
+
   }
 
   // Returns true when the command should end.

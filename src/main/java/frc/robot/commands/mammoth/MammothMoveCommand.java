@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MammothMoveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private MammothSubsystem mammothSubsystem;
-  private MammothPID mammothPID;
+
+  private double setpoint;
+  private boolean isIdle;
   /**
    * Creates a new ExampleCommand.
    *
@@ -35,19 +37,28 @@ public class MammothMoveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mammothSubsystem.setIntakeMotor(-1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mammothSubsystem.setMovementMotor(RobotContainer.Controller.getY(Hand.kRight));
-    mammothSubsystem.setIntakeMotor(-1);
+    if (RobotContainer.Controller.getY(Hand.kLeft) > 0.1 || RobotContainer.Controller.getY(Hand.kLeft) < -0.1) {
+      mammothSubsystem.setMovementMotor(RobotContainer.Controller.getY(Hand.kLeft));
+      isIdle = false;
+    }
+    else if (isIdle) {
+      mammothSubsystem.setMovementMotor(mammothSubsystem.getEncoderPID(setpoint));
+    }
+    else {
+      setpoint = mammothSubsystem.getEncoder();
+      isIdle = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mammothPID.schedule();
     mammothSubsystem.setIntakeMotor(0);
   }
 

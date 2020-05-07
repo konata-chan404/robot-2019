@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeMoveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private IntakeSubsystem intakeSubsystem;
-  private IntakePID intakePID;
   private double power;
 
   /**
@@ -45,6 +44,5 @@ public class IntakeMoveCommand extends CommandBase {
   
   @Override
   public void end(boolean interrupted) {
-    intakePID.schedule();
   }
 }
