@@ -72,7 +72,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     return elevatorPID.calculate(MathUtil.clamp(getEncoder() , -1, 1), setpoint);
   }
   
-  public boolean getAtSetpoint() {
+  public boolean atSetpoint() {
     if (elevatorPID.atSetpoint()) {
       timer.start();
 
