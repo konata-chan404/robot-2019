@@ -73,10 +73,13 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
   
   public boolean getAtSetpoint() {
-    timer.start();
-    if (timer.hasElapsed(4)) {
-      timer.stop();
-      return true;
+    if (elevatorPID.atSetpoint()) {
+      timer.start();
+
+      if (timer.hasElapsed(2)) {
+        timer.stop();
+        return true;
+      }
     }
     return false;
   }
