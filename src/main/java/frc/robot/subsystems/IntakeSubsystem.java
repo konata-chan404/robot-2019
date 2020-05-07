@@ -13,7 +13,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -36,8 +36,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private VictorSPX intakeVictor;
   private Encoder intakeEncoder;
-  private DigitalInput intakeLimit;
-
   private PIDController intakePID;
 
 
@@ -45,7 +43,6 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeSolenoid = new Solenoid(Constants.IntakeSolenoidPort);
     intakeVictor = new VictorSPX(Constants.IntakeVictorPort);
     intakeEncoder =  new Encoder(Constants.IntakeFowardEncoderPort, Constants.IntakeReverseEncoderPort, false, EncodingType.k4X);
-    intakeLimit = new DigitalInput(Constants.IntakeLimitPort);
     aTalon = new TalonSRX(Constants.IntakeLeftTalonPort);
     bTalon = new TalonSRX(Constants.IntakeRightTalonPort);
 
@@ -86,7 +83,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public boolean getLimitSwitch() {
-    return intakeLimit.get();
+    return aTalon.getSensorCollection().isFwdLimitSwitchClosed();
   }
 
   public void setSolenoid(boolean state) {

@@ -13,7 +13,6 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,14 +29,12 @@ public class MammothSubsystem extends SubsystemBase {
 
   private WPI_TalonSRX mammothTalon;
   private WPI_VictorSPX mammothVictor;
-  private DigitalInput mammothLimit;
   private Encoder mammothEncoder;
   private PIDController mammothPID;
 
   private MammothSubsystem() {
     mammothTalon = new WPI_TalonSRX(Constants.MammothTalonPort); 
     mammothVictor = new WPI_VictorSPX(Constants.MammothVictorPort);
-    mammothLimit = new DigitalInput(Constants.MammothLimitPort);
     mammothEncoder = new Encoder(Constants.MammothFowardEncoderPort, Constants.MammothReverseEncoderPort, false, EncodingType.k4X);
 
     mammothPID = new PIDController(Constants.MammothKp , Constants.MammothKi, Constants.MammothKd);
@@ -71,7 +68,7 @@ public class MammothSubsystem extends SubsystemBase {
   }
 
   public boolean getLimitSwitch() {
-    return mammothLimit.get();
+    return mammothTalon.getSensorCollection().isFwdLimitSwitchClosed();
   }
 
   public void resetEncoder() {
