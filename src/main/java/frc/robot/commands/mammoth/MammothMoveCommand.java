@@ -45,6 +45,10 @@ public class MammothMoveCommand extends CommandBase {
     if (mammothSubsystem.getCurrent() > 5.1) {
       mammothSubsystem.setIntakeMotor(-1);
     }
+    else {
+      mammothSubsystem.setIntakeMotor(0);
+    }
+
     if (RobotContainer.Controller.getY(Hand.kLeft) > 0.1 || RobotContainer.Controller.getY(Hand.kLeft) < -0.1) {
       mammothSubsystem.setMovementMotor(RobotContainer.Controller.getY(Hand.kLeft));
       isIdle = false;
