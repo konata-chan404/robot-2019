@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,7 +31,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   private WPI_TalonSRX elevatorTalon;
   private Encoder elevatorEncoder;
   private PIDController elevatorPID;
-  private Timer timer;
 
   private ElevatorSubsystem() {
     elevatorTalon = new WPI_TalonSRX(Constants.ElevatorTalonPort);
@@ -42,8 +40,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorPID.setTolerance(1);
     elevatorTalon.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen);
     elevatorEncoder.setDistancePerPulse(1);
-
-    timer = new Timer();
   }
 
   public static ElevatorSubsystem getInstance() {
@@ -70,15 +66,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
   
   public boolean atSetpoint() {
-    if (elevatorPID.atSetpoint()) {
-      timer.start();
-
-      if (timer.hasElapsed(2)) {
-        timer.stop();
-        return true;
-      }
-    }
-    return false;
+    return elevatorPID.atSetpoint();
   }
 
   public boolean getLimitSwitch() {

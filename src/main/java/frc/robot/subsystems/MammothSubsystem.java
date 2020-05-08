@@ -67,6 +67,10 @@ public class MammothSubsystem extends SubsystemBase {
     return mammothEncoder.getDistance();
   }
 
+  public boolean atSetpoint() {
+    return mammothPID.atSetpoint();
+  }
+
   public boolean getLimitSwitch() {
     return mammothTalon.getSensorCollection().isFwdLimitSwitchClosed();
   }

@@ -82,6 +82,10 @@ public class IntakeSubsystem extends SubsystemBase {
     return intakePID.calculate(MathUtil.clamp(getEncoder(), -1, 1));
   }
 
+  public boolean atSetpoint() {
+    return intakePID.atSetpoint();
+  }
+
   public boolean getLimitSwitch() {
     return aTalon.getSensorCollection().isFwdLimitSwitchClosed();
   }
