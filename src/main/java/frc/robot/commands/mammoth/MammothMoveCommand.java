@@ -37,12 +37,14 @@ public class MammothMoveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mammothSubsystem.setIntakeMotor(-1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (mammothSubsystem.getCurrent() > 5.1) {
+      mammothSubsystem.setIntakeMotor(-1);
+    }
     if (RobotContainer.Controller.getY(Hand.kLeft) > 0.1 || RobotContainer.Controller.getY(Hand.kLeft) < -0.1) {
       mammothSubsystem.setMovementMotor(RobotContainer.Controller.getY(Hand.kLeft));
       isIdle = false;

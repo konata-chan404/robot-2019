@@ -63,7 +63,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakeMotors(double power) {
-    bTalon.set(ControlMode.PercentOutput, power);
+    aTalon.set(ControlMode.PercentOutput, power);
   }
 
   public void setIntakeRotate(double power) {
@@ -71,7 +71,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void resetEncoder() {
-    intakeEncoder.reset();;
+    intakeEncoder.reset();
   }
 
   public double getEncoder() {
