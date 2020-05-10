@@ -8,8 +8,9 @@
 package frc.robot.commands.auto;
 
 import frc.robot.subsystems.AutomationSubsystem;
-import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.elevator.ElevatorPID;
+import frc.robot.commands.intake.IntakePID;
+import frc.robot.commands.mammoth.MammothPID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -17,10 +18,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class TakeBallAutomation extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  IntakeSubsystem intakeSubsystem;
-  ElevatorSubsystem elevatorSubsystem;
 
-  AutomationSubsystem automation;
+  private CommandBase elevatorPID, intakePID, mammothPID;
 
   /**
    * Creates a new ExampleCommand.
@@ -29,17 +28,19 @@ public class TakeBallAutomation extends CommandBase {
    */
 
   public TakeBallAutomation(AutomationSubsystem auto) {
-    intakeSubsystem = IntakeSubsystem.getInstance();
-    elevatorSubsystem = ElevatorSubsystem.getInstance();
+    elevatorPID = new ElevatorPID(0, 2);
+    intakePID = new IntakePID(-200, 2);
+    mammothPID = new MammothPID(-200, 2);
 
-    automation = auto;
-    addRequirements(automation);
+    addRequirements(auto);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeSubsystem.setIntakeRotate(1);
+    elevatorPID.initialize();
+    intakePID.initialize();
+    mammothPID.initialize();
   }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -50,7 +51,6 @@ public class TakeBallAutomation extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-      intakeSubsystem.setIntakeRotate(0);
     }
   
     // Returns true when the command should end.
